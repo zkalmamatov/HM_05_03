@@ -8,35 +8,30 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import kg.example.hm_05_03.databinding.FragmentBlankBinding
 
 
 class BlankFragment : Fragment() {
 
-    private var textViewCount: TextView? = null
+    private var binding: FragmentBlankBinding? = null
     private var count = 0
-    private var btnPls: Button? = null
-    private var btnMns: Button? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view: View = inflater.inflate(R.layout.fragment_blank, container, false)
+        binding = FragmentBlankBinding.inflate(inflater, container, false)
+        val view = binding!!.root
 
-        textViewCount = view.findViewById<View>(R.id.txt_count) as TextView?
-        btnMns = view.findViewById<View>(R.id.btn_minus) as Button?
-        btnPls = view.findViewById<View>(R.id.btn_plus) as Button?
-
-        btnMns?.setOnClickListener(View.OnClickListener {
+        binding!!.btnMinus.setOnClickListener {
             count--
             updateCounterText()
-        })
+        }
 
-        btnPls?.setOnClickListener(View.OnClickListener {
+        binding!!.btnPlus.setOnClickListener {
             count++
             updateCounterText()
-        })
+        }
 
         updateCounterText()
 
@@ -44,11 +39,13 @@ class BlankFragment : Fragment() {
     }
 
     private fun updateCounterText() {
-        textViewCount.setText(String.valueOf(count))
+        binding!!.txtCount.text = count.toString()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }
 
-private fun TextView?.setText(valueOf: Any) {
 
-}
